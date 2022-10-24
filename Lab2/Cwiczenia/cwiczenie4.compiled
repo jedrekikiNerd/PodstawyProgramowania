@@ -1,4 +1,4 @@
-	.file	"prog1.cpp"
+	.file	"cwiczenie4.cpp"
 	.text
 	.local	_ZStL8__ioinit
 	.comm	_ZStL8__ioinit,1,1
@@ -13,8 +13,28 @@ main:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
+	subq	$16, %rsp
+	movl	$2, -12(%rbp)
+	movl	$0, -8(%rbp)
+	movl	$0, -4(%rbp)
+	jmp	.L2
+.L3:
+	movl	-12(%rbp), %eax
+	addl	%eax, -8(%rbp)
+	movl	-12(%rbp), %eax
+	imull	%eax, %eax
+	movl	%eax, -12(%rbp)
+	addl	$1, -4(%rbp)
+.L2:
+	cmpl	$9, -4(%rbp)
+	jle	.L3
+	movl	-8(%rbp), %eax
+	movl	%eax, %esi
+	leaq	_ZSt4cout(%rip), %rax
+	movq	%rax, %rdi
+	call	_ZNSolsEi@PLT
 	movl	$0, %eax
-	popq	%rbp
+	leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
@@ -34,9 +54,9 @@ _Z41__static_initialization_and_destruction_0ii:
 	movl	%edi, -4(%rbp)
 	movl	%esi, -8(%rbp)
 	cmpl	$1, -4(%rbp)
-	jne	.L5
+	jne	.L7
 	cmpl	$65535, -8(%rbp)
-	jne	.L5
+	jne	.L7
 	leaq	_ZStL8__ioinit(%rip), %rax
 	movq	%rax, %rdi
 	call	_ZNSt8ios_base4InitC1Ev@PLT
@@ -47,7 +67,7 @@ _Z41__static_initialization_and_destruction_0ii:
 	movq	_ZNSt8ios_base4InitD1Ev@GOTPCREL(%rip), %rax
 	movq	%rax, %rdi
 	call	__cxa_atexit@PLT
-.L5:
+.L7:
 	nop
 	leave
 	.cfi_def_cfa 7, 8
