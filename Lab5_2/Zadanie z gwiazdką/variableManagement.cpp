@@ -1,6 +1,5 @@
 #include "variableManagement.h"
 #include <iostream>
-#include <cassert>
 using namespace std;
 
 int number_elements = 0;
@@ -21,6 +20,16 @@ void init_variables() {
     Labels[4] = "Obecność";
 }
 
+
+//Zwalnianie pamięci (czyszczenie kolumn przed ich powiększeniem/zmniejszeniem)
+void delete_table() {
+
+    for (int i = 0; i<COLUMNS_QUANTITY; i++)
+        delete[] Table[i];
+    delete[] Table;
+}
+
+
 //Inicjacja wierszy głównej tabeli
 void new_table() {
     for (int i = 0; i < COLUMNS_QUANTITY; i++){
@@ -30,13 +39,6 @@ void new_table() {
 }
 
 
-//Zwalnianie pamięci (czyszczenie kolumn przed ich powiększeniem/zmniejszeniem)
-void delete_table() {
-
-    for (int i = 0; i<COLUMNS_QUANTITY; i++)
-        delete[] Table[i];
-}
-
 //Dodawanie rekordu do głównej tabeli
 void add_record() {
 
@@ -45,7 +47,6 @@ void add_record() {
 
     for (int i = 0; i<COLUMNS_QUANTITY; i++) {
 
-        cout << "i: "<< i <<endl;
         CopyTable[i] = new string [lines+1];
 
         for (int j = 0; j<lines; j++)
@@ -56,11 +57,7 @@ void add_record() {
 
     delete_table();
     lines += 1;
-
-    for (int i = 0; i<COLUMNS_QUANTITY; i++) {
-
-        Table[i] = CopyTable[i];
-    }
+    Table = CopyTable;
 
     number_elements = lines;
 }
@@ -75,7 +72,6 @@ void delete_record(int row) {
 
     for (int i = 0; i<COLUMNS_QUANTITY; i++) {
 
-        cout << "i: "<< i <<endl;
         CopyTable[i] = new string [lines-1];
 
         int k = 0;
@@ -90,17 +86,7 @@ void delete_record(int row) {
 
     delete_table();
     lines -= 1;
-
-    for (int i = 0; i<COLUMNS_QUANTITY; i++) {
-
-        Table[i] = CopyTable[i];
-    }
+    Table = CopyTable;
 
     number_elements = lines;
-}
-
-void free_all() {
-    for (int i = 0; i<COLUMNS_QUANTITY; i++)
-        delete[] Table[i];
-    delete[] Table;
 }

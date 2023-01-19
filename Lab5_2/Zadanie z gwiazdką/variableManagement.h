@@ -9,4 +9,4 @@ void add_record();
 void delete_record(int row);
 void new_table();
 void init_variables();
-void free_all();
+void delete_table();

@@ -16,6 +16,8 @@ void print_row(int row, int longest_each_column[], bool zero_row = false) {
 
     if (!zero_row)
         cout << row+1 << ".  ";
+    else
+        cout << "    ";
     
     for (int column=0; column<COLUMNS_QUANTITY; column++) {
 
@@ -42,6 +44,10 @@ void print_row(int row, int longest_each_column[], bool zero_row = false) {
 
 //Znajdź najdłuizszy string w kolumnie
 void find_longest(int longest_each_column[]) {
+
+    for(int label=0; label<COLUMNS_QUANTITY; label++)
+        longest_each_column[label] = Labels[label].size();
+
     for (int column=0; column<COLUMNS_QUANTITY; column++) {
 
         for (int row=0; row<number_elements; row++) {
@@ -64,5 +70,21 @@ void display_table() {
     for (int row = 0; row<number_elements; row++) {
 
         print_row(row, longest_each_column);
+    }
+}
+
+//Wyszukaj i wyświetl pasujące wartości
+void display_find_values(int column, string value) {
+    column -= 1;
+    cout << "Wyniki wyszukiwania" << endl;
+    clear_terminal();
+
+    int longest_each_column[COLUMNS_QUANTITY] = {0};
+    find_longest(longest_each_column);
+    print_row(0, longest_each_column, true);
+
+    for (int row = 0; row<number_elements; row++) {
+        if (Table[column][row] == value)
+            print_row(row, longest_each_column);
     }
 }

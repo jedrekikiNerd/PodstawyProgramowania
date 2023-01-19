@@ -9,15 +9,18 @@ int readfile(string path) {
     fstream file;
     string line;
     file.open(path);
-    if ( !file.good() ) {
+
+    if (!file.good())
         return 1;
-    }
-    int i = 0;
-    while ( !file.eof() ) {
+
+    while (!file.eof()) {
+
         for (int column = 0; column < COLUMNS_QUANTITY; column++)
             file >> NewRecord[column];
+        
         add_record();
     }
+
     file.close();
     return 0;
 }
@@ -26,18 +29,25 @@ int writefile(string path){
     ofstream file;
     string line;
     file.open(path);
-    if ( !file.good() ) {
+
+    if (!file.good())
         return 1;
-    }
 
 
     for ( int row=0; row < number_elements; row++ ) {
+
         line = "";
+
         for ( int column = 0; column < COLUMNS_QUANTITY; column++ ) {
+
             line += Table[column][row];
-            line += " ";
+            if (column != COLUMNS_QUANTITY-1)
+                line += " ";
         }
-        line += "\n";
+
+        if (row != number_elements-1)
+            line += "\n";
+
         file << line;
 
     }
